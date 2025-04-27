@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_research_project_user,access.research.project.user,model_research_project,research_project.group_research_project_user,1,1,1,0
+access_research_project_manager,access.research.project.manager,model_research_project,research_project.group_research_project_manager,1,1,1,1
+access_research_project_admin,access.research.project.admin,model_research_project,base.group_system,1,1,1,1

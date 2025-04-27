@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Report -->
+        <record id="report_research_project_action" model="ir.actions.report">
+            <field name="name">Informe de Proyecto de Investigación</field>
+            <field name="model">research.project</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">research_project.report_research_project_document</field>
+            <field name="report_file">research_project.report_research_project_document</field>
+            <field name="binding_model_id" ref="model_research_project"/>
+            <field name="binding_type">report</field>
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- QWeb Report Template -->
+        <template id="report_research_project_document">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2 t-field="o.name" class="mt-4"/>
+                            <h3>Código: <span t-field="o.code"/></h3>
+                            
+                            <div class="row mt-4">
+                                <div class="col-6">
+                                    <strong>Estado:</strong> <span t-field="o.state"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Prioridad:</strong> <span t-field="o.priority"/>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <strong>Fecha de inicio:</strong> <span t-field="o.start_date"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Fecha de finalización:</strong> <span t-field="o.end_date"/>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-2">
+                                <div class="col-6">
+                                    <strong>Duración (días):</strong> <span t-field="o.duration"/>
+                                </div>
+                                <div class="col-6">
+                                    <strong>Presupuesto:</strong> <span t-field="o.budget"/>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <strong>Investigador Principal:</strong>
+                                    <span t-field="o.leader_id"/>
+                                </div>
+                            </div>
+                            
+                            <h4 class="mt-4">Descripción</h4>
+                            <p t-field="o.description"/>
+                            
+                            <h4 class="mt-4">Investigadores</h4>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Teléfono</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.investigator_ids" t-as="investigator">
+                                        <td><span t-field="investigator.name"/></td>
+                                        <td><span t-field="investigator.email"/></td>
+                                        <td><span t-field="investigator.phone"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

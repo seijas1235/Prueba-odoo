@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Form view -->
+        <record id="view_research_project_form" model="ir.ui.view">
+            <field name="name">research.project.form</field>
+            <field name="model">research.project</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Proyecto de Investigación">
+                    <header>
+                        <button name="action_set_in_progress" string="Iniciar" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_set_review" string="Enviar a Revisión" type="object" class="oe_highlight" invisible="state != 'in_progress'"/>
+                        <button name="action_set_completed" string="Completar" type="object" class="oe_highlight" invisible="state != 'review'"/>
+                        <button name="action_set_cancelled" string="Cancelar" type="object" invisible="state in ('completed', 'cancelled')"/>
+                        <button name="action_set_draft" string="Volver a Borrador" type="object" invisible="state == 'draft'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,review,completed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="code" readonly="1"/>
+                            </h1>
+                            <h2>
+                                <field name="name" placeholder="Nombre del proyecto"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="duration"/>
+                                <field name="priority" widget="priority"/>
+                            </group>
+                            <group>
+                                <field name="budget" widget="monetary"/>
+                                <field name="leader_id" domain="[('is_company', '=', False)]"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Descripción">
+                                <field name="description" placeholder="Describe el proyecto..."/>
+                            </page>
+                            <page string="Investigadores">
+                                <field name="investigator_ids" domain="[('is_company', '=', False)]" widget="many2many_tags"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- List view -->
+        <record id="view_research_project_tree" model="ir.ui.view">
+            <field name="name">research.project.tree</field>
+            <field name="model">research.project</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list decoration-info="state == 'draft'" decoration-success="state == 'completed'" decoration-warning="state == 'in_progress'" decoration-danger="state == 'cancelled'" default_group_by="state">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="leader_id"/>
+                    <field name="priority" widget="priority"/>
+                    <field name="budget"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Search view -->
+        <record id="view_research_project_search" model="ir.ui.view">
+            <field name="name">research.project.search</field>
+            <field name="model">research.project</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="leader_id"/>
+                    <field name="description"/>
+                    <filter string="Mis Proyectos" name="my_projects" domain="[('leader_id.user_ids', 'in', [uid])]"/>
+                    <separator/>
+                    <filter string="Nuevos" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="En Progreso" name="in_progress" domain="[('state', '=', 'in_progress')]"/>
+                    <filter string="En Revisión" name="in_review" domain="[('state', '=', 'review')]"/>
+                    <filter string="Completados" name="completed" domain="[('state', '=', 'completed')]"/>
+                    <filter string="Cancelados" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                    <group expand="0" string="Agrupar por">
+                        <filter string="Estado" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Líder" name="leader" context="{'group_by': 'leader_id'}"/>
+                        <filter string="Prioridad" name="priority" context="{'group_by': 'priority'}"/>
+                        <filter string="Mes de Inicio" name="start_month" context="{'group_by': 'start_date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_research_project" model="ir.actions.act_window">
+            <field name="name">Proyectos de Investigación</field>
+            <field name="res_model">research.project</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'search_default_state': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crea tu primer proyecto de investigación
+                </p>
+                <p>
+                    Gestiona proyectos de investigación, investigadores y presupuestos.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu -->
+        <menuitem id="menu_research_project_root" name="Proyectos de Investigación" sequence="1"/>
+        <menuitem id="menu_research_project" name="Proyectos" parent="menu_research_project_root" action="action_research_project" sequence="1"/>
+    </data>
+</odoo>
