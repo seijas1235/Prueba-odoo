@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data noupdate="1">
+        <!-- Secuencia para generar códigos automáticos de proyectos (ej. PR0001) -->
         <record id="sequence_research_project" model="ir.sequence">
             <field name="name">Research Project Sequence</field>
             <field name="code">research.project</field>

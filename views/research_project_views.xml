@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <!-- Form view -->
+        <!-- Vista de formulario para los proyectos de investigación -->
+        <!-- Muestra todos los campos del proyecto, botones para cambiar estados y el chatter -->
         <record id="view_research_project_form" model="ir.ui.view">
             <field name="name">research.project.form</field>
             <field name="model">research.project</field>
@@ -55,7 +56,8 @@
             </field>
         </record>
 
-        <!-- List view -->
+        <!-- Vista de lista para mostrar todos los proyectos -->
+        <!-- Incluye decoraciones para resaltar los estados y agrupamiento por estado -->
         <record id="view_research_project_tree" model="ir.ui.view">
             <field name="name">research.project.tree</field>
             <field name="model">research.project</field>
@@ -74,7 +76,8 @@
             </field>
         </record>
 
-        <!-- Search view -->
+        <!-- Vista de búsqueda para filtrar y agrupar proyectos -->
+        <!-- Incluye filtros predefinidos y opciones de agrupamiento -->
         <record id="view_research_project_search" model="ir.ui.view">
             <field name="name">research.project.search</field>
             <field name="model">research.project</field>
@@ -101,7 +104,7 @@
             </field>
         </record>
 
-        <!-- Action -->
+        <!-- Acción para abrir la vista de proyectos -->
         <record id="action_research_project" model="ir.actions.act_window">
             <field name="name">Proyectos de Investigación</field>
             <field name="res_model">research.project</field>
@@ -117,7 +120,7 @@
             </field>
         </record>
 
-        <!-- Menu -->
+        <!-- Menú para acceder a los proyectos -->
         <menuitem id="menu_research_project_root" name="Proyectos de Investigación" sequence="1"/>
         <menuitem id="menu_research_project" name="Proyectos" parent="menu_research_project_root" action="action_research_project" sequence="1"/>
     </data>

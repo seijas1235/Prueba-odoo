@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+        <!-- Categoría para los grupos de permisos del módulo -->
         <record id="module_category_research" model="ir.module.category">
             <field name="name">Research Project</field>
             <field name="sequence">20</field>
         </record>
 
+        <!-- Grupo para usuarios básicos: pueden ver y editar sus propios proyectos -->
         <record id="group_research_project_user" model="res.groups">
             <field name="name">Research Project User</field>
             <field name="category_id" ref="module_category_research"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
+        <!-- Grupo para gerentes: tienen acceso completo a todos los proyectos -->
         <record id="group_research_project_manager" model="res.groups">
             <field name="name">Research Project Manager</field>
             <field name="category_id" ref="module_category_research"/>
@@ -19,7 +22,7 @@
             <field name="users" eval="[(4, ref('base.user_admin'))]"/>
         </record>
 
-        <!-- Regla de acceso para proyectos: usuarios solo ven sus propios proyectos -->
+        <!-- Regla para usuarios: solo ven proyectos donde son el líder -->
         <record id="rule_research_project_user" model="ir.rule">
             <field name="name">Research Project: Users see own projects</field>
             <field name="model_id" ref="model_research_project"/>
@@ -31,7 +34,7 @@
             <field name="perm_unlink" eval="False"/>
         </record>
 
-        <!-- Regla de acceso para proyectos: gerentes ven todos los proyectos -->
+        <!-- Regla para gerentes: ven todos los proyectos -->
         <record id="rule_research_project_manager" model="ir.rule">
             <field name="name">Research Project: Managers see all projects</field>
             <field name="model_id" ref="model_research_project"/>
