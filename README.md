@@ -16,7 +16,7 @@ Este módulo permite gestionar proyectos de investigación en Odoo 18. Los usuar
 ## Dependencias
 
 - **Odoo 18**
-- **Módulos requeridos:** `base`, `mail`, `report`
+- **Módulos requeridos:** `base`, `mail`, `web`
 
 ---
 
@@ -91,13 +91,6 @@ Este módulo permite gestionar proyectos de investigación en Odoo 18. Los usuar
 - Se utiliza `@api.onchange` para limpiar la fecha de finalización si la fecha de inicio es posterior.
 - Se utiliza `@api.depends` para calcular automáticamente la duración del proyecto.
 - Se creó un grupo de seguridad específico para controlar accesos: usuarios ven solo sus proyectos, mientras que los gerentes ven todos.
-
----
-
-## Mejoras Potenciales
-
-- Agregar gráficos de avance de proyectos para visualizar el progreso.
-- Crear tareas o hitos asociados al proyecto para un seguimiento más detallado.
 
 ---
 
